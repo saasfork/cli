@@ -1,14 +1,12 @@
 {
-  "name": "nd-test-npx",
-  "version": "1.0.13",
+  "name": "@saasfork/cli",
+  "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "nd-test-npx": "./cli.js"
+    "saasfork": "./cli.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {  },
   "keywords": [],
   "author": "",
   "license": "ISC",
