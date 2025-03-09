@@ -1,69 +1,84 @@
 # SaasFork CLI
 
-SaasFork CLI est un outil en ligne de commande pour faciliter le développement et la gestion de vos projets SaaS.
+SaasFork CLI is a command line tool to facilitate the development and management of your SaaS projects.
 
-## Utilisation
+## Usage
 
-### Avec npx (recommandé)
+### With npx (recommended)
 
 ```bash
-npx @saasfork/cli [commande] [options]
+npx @saasfork/cli [command] [options]
 ```
 
-### Installation (optionnel)
+### Installation (optional)
 
-Si vous préférez installer le CLI globalement :
+If you prefer to install the CLI globally:
 
 ```bash
-# Installation globale
+# Global installation
 npm install -g @saasfork/cli
 
-# Ou avec yarn
+# Or with yarn
 yarn global add @saasfork/cli
 
-# Puis utilisation
-saasfork [commande] [options]
+# Then use
+saasfork [command] [options]
 ```
 
-## Commandes disponibles
+## Available Commands
 
-### Commande d'aide
+### Help Command
 
 ```bash
 npx @saasfork/cli --help
 ```
 
-### Création d'un nouveau projet
+### Creating a New Project
 
 ```bash
-npx @saasfork/cli <nom-du-projet>
+npx @saasfork/cli <project-name>
 ```
 
 #### Options
 
 | Option | Description |
 |--------|-------------|
-| `<nom-du-projet>` | Nom du projet à créer (requis) |
+| `<project-name>` | Name of the project to create (required) |
 
-### Autres commandes
+### Other Commands
 
-D'autres commandes seront ajoutées au fur et à mesure du développement de l'outil.
+More commands will be added as the tool develops.
 
-## Développement
+## Publishing Command
 
-Pour contribuer au développement du CLI:
+To publish a new version of the CLI:
 
 ```bash
-# Cloner le dépôt
-git clone [url-du-repo]
+# Increment for a patch
+npm version patch
 
-# Installer les dépendances
+# login
+npm login
+
+# Publish
+npm publish --access public
+```
+
+## Development
+
+To contribute to the CLI development:
+
+```bash
+# Clone the repository
+git clone [repo-url]
+
+# Install dependencies
 npm install
 
-# Lier le package en développement
+# Link the package for development
 npm link
 ```
 
-## Licence
+## License
 
 ISC
