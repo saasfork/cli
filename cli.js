@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
 import { defineCommand, runMain } from "citty";
-import { createNuxtProject, installDependencies, installTailwind, installSass, setupGlobalCss } from "./src/utils/installer.js";
+import { createNuxtProject, installDependencies, installModulesFromConfig, setupFeatures } from "./src/utils/installer.js";
 import { addCssToNuxtConfig } from "./src/utils/nuxt-config.js";
+import config from "./src/config.js";
 
 const main = defineCommand({
   name: "create",
@@ -22,18 +23,17 @@ const main = defineCommand({
       // Step 2: Install base dependencies
       installDependencies();
       
-      // Step 3: Install and configure Tailwind CSS
-      installTailwind();
+      // Step 3: Install modules and dependencies from config
+      installModulesFromConfig(config);
       
-      // Step 4: Install Sass
-      installSass();
-      
-      // Step 5: Setup global CSS
+      // Step 4: Setup features based on config
       const projectPath = process.cwd();
-      const cssPath = setupGlobalCss(projectPath);
+      const { cssPath } = setupFeatures(projectPath, config);
       
-      // Step 6: Configure Nuxt to use the CSS file
-      addCssToNuxtConfig(projectPath, cssPath);
+      // Step 5: Configure Nuxt to use the CSS file if available
+      if (cssPath) {
+        addCssToNuxtConfig(projectPath, cssPath);
+      }
       
       console.log("\n✅ Project setup completed successfully!");
     } catch (error) {

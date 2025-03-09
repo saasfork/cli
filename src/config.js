@@ -2,8 +2,29 @@ export default {
   nuxtTemplate: "v3",
   packageManager: "npm",
   defaultCssPath: "~/assets/styles.scss",
-  dependencies: {
-    dev: ["sass"],
-    modules: ["tailwindcss"]
+  modules: [
+    {
+      name: "tailwindcss",
+      installCommand: "npx nuxi@latest module add tailwindcss",
+      message: "Tailwind CSS"
+    },
+    {
+      name: "icon", 
+      installCommand: "npx nuxi module add icon",
+      message: "Nuxt Icon"
+    }
+  ],
+  devDependencies: [
+    {
+      name: "sass",
+      installCommand: "npm install -D sass",
+      message: "Sass"
+    }
+  ],
+  features: {
+    globalCss: {
+      enabled: true,
+      path: "~/assets/styles.scss"
+    }
   }
 };

@@ -16,16 +16,26 @@ export function installDependencies() {
   execSync("npm install", { stdio: 'inherit' });
 }
 
-export function installTailwind() {
-  console.log("\nInstalling Tailwind CSS...");
-  execSync("npx nuxi@latest module add tailwindcss", { stdio: 'inherit' });
-  console.log("\nTailwind CSS has been installed and configured successfully!");
+export function installModule(module) {
+  console.log(`\nInstalling ${module.message}...`);
+  execSync(module.installCommand, { stdio: 'inherit' });
+  console.log(`\n${module.message} has been installed successfully!`);
 }
 
-export function installSass() {
-  console.log("\nInstalling Sass...");
-  execSync("npm install -D sass", { stdio: 'inherit' });
-  console.log("\nSass has been installed successfully!");
+export function installModulesFromConfig(config) {
+  // Install Nuxt modules
+  if (config.modules && config.modules.length > 0) {
+    for (const module of config.modules) {
+      installModule(module);
+    }
+  }
+  
+  // Install dev dependencies
+  if (config.devDependencies && config.devDependencies.length > 0) {
+    for (const dependency of config.devDependencies) {
+      installModule(dependency);
+    }
+  }
 }
 
 export function setupGlobalCss(projectPath) {
@@ -42,4 +52,18 @@ export function setupGlobalCss(projectPath) {
   fs.writeFileSync(globalCssPath, "// Your global styles here\n", "utf8");
   
   return "~/assets/styles.scss";
+}
+
+// Fonction plus générique pour implémenter les fonctionnalités selon la configuration
+export function setupFeatures(projectPath, config) {
+  let cssPath = null;
+  
+  // Configurer le CSS global si activé
+  if (config.features.globalCss && config.features.globalCss.enabled) {
+    cssPath = setupGlobalCss(projectPath);
+  }
+  
+  return {
+    cssPath
+  };
 }
