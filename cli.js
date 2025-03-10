@@ -34,7 +34,10 @@ const main = defineCommand({
       if (cssPath) {
         addCssToNuxtConfig(projectPath, cssPath);
       }
-      
+
+      // Step 6: Copier les fichiers Docker
+      copyDockerFiles(projectPath);
+
       console.log("\n✅ Project setup completed successfully!");
     } catch (error) {
       console.error('\n❌ Error while creating the project:', error.message);

@@ -54,6 +54,20 @@ export function setupGlobalCss(projectPath) {
   return "~/assets/styles.scss";
 }
 
+export function copyDockerFiles(projectPath) {
+  const templatePath = path.resolve(__dirname, '../templates');
+
+  const filesToCopy = ['Dockerfile', '.dockerignore'];
+
+  filesToCopy.forEach(file => {
+    const src = path.join(templatePath, file);
+    const dest = path.join(projectPath, file);
+
+    fs.copyFileSync(src, dest);
+    console.log(`✅ ${file} ajouté au projet.`);
+  });
+}
+
 // Fonction plus générique pour implémenter les fonctionnalités selon la configuration
 export function setupFeatures(projectPath, config) {
   let cssPath = null;
