@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { defineCommand, runMain } from "citty";
-import { createNuxtProject, installDependencies, installModulesFromConfig, setupFeatures } from "./src/utils/installer.js";
+import { copyDockerFiles, createNuxtProject, installDependencies, installModulesFromConfig, setupFeatures } from "./src/utils/installer.js";
 import { addCssToNuxtConfig } from "./src/utils/nuxt-config.js";
 import config from "./src/config.js";
 
