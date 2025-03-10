@@ -12,6 +12,11 @@ export default {
       name: "icon", 
       installCommand: "npx nuxi module add icon",
       message: "Nuxt Icon"
+    },
+    {
+      name: "SaasFork UI",
+      installCommand: "npx nuxi module add @saasfork/ui",
+      message: "SaasFork UI"
     }
   ],
   devDependencies: [
