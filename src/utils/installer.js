@@ -2,6 +2,7 @@ import { fileURLToPath } from 'url';
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { setupI18nFiles } from './i18nSetup';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,6 +80,10 @@ export function setupFeatures(projectPath, config) {
   // Configurer le CSS global si activé
   if (config.features.globalCss && config.features.globalCss.enabled) {
     cssPath = setupGlobalCss(projectPath);
+  }
+
+  if (config.features.i18n && config.features.i18n.enabled) {
+    setupI18nFiles(projectPath);
   }
   
   return {

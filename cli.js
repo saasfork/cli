@@ -2,7 +2,7 @@
 
 import { defineCommand, runMain } from "citty";
 import { copyDockerFiles, createNuxtProject, installDependencies, installModulesFromConfig, setupFeatures } from "./src/utils/installer.js";
-import { addCssToNuxtConfig } from "./src/utils/nuxt-config.js";
+import { addCssToNuxtConfig, addI18nToNuxtConfig } from "./src/utils/nuxt-config.js";
 import config from "./src/config.js";
 
 const main = defineCommand({
@@ -29,13 +29,19 @@ const main = defineCommand({
       // Step 4: Setup features based on config
       const projectPath = process.cwd();
       const { cssPath } = setupFeatures(projectPath, config);
+      const { i18nConfig } = setupFeatures(projectPath, config);
       
       // Step 5: Configure Nuxt to use the CSS file if available
       if (cssPath) {
         addCssToNuxtConfig(projectPath, cssPath);
       }
 
-      // Step 6: Copier les fichiers Docker
+      // Step 6: Configure Nuxt to use i18n if available
+      if (i18nConfig) {
+        addI18nToNuxtConfig(projectPath, i18nConfig);
+      }
+
+      // Step 7: Copier les fichiers Docker
       copyDockerFiles(projectPath);
 
       console.log("\n✅ Project setup completed successfully!");
