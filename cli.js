@@ -3,6 +3,7 @@
 import { defineCommand, runMain } from "citty";
 import { copyDockerFiles, createNuxtProject, installDependencies, installModulesFromConfig, setupFeatures } from "./src/utils/installer.js";
 import { addCssToNuxtConfig, addI18nToNuxtConfig } from "./src/utils/nuxt-config.js";
+import { handleError } from "./src/utils/error-handler.js";
 import config from "./src/config.js";
 
 const main = defineCommand({
@@ -28,8 +29,7 @@ const main = defineCommand({
       
       // Step 4: Setup features based on config
       const projectPath = process.cwd();
-      const { cssPath } = setupFeatures(projectPath, config);
-      const { i18nConfig } = setupFeatures(projectPath, config);
+      const { cssPath, i18nConfig } = setupFeatures(projectPath, config);
       
       // Step 5: Configure Nuxt to use the CSS file if available
       if (cssPath) {
@@ -46,8 +46,7 @@ const main = defineCommand({
 
       console.log("\n✅ Project setup completed successfully!");
     } catch (error) {
-      console.error('\n❌ Error while creating the project:', error.message);
-      process.exit(1);
+      handleError(error, 'project creation', true);
     }
   },
 });

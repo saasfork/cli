@@ -42,7 +42,7 @@ export default {
       path: "~/assets/styles.scss"
     },
     i18n: {
-      enabled: false,
+      enabled: true,
       config: {
         locales: [
           { code: 'en', file: 'en-US.json' },
@@ -50,7 +50,6 @@ export default {
         ],
         lazy: true,
         defaultLocale: 'en',
-        langDir: 'locales/'
       },
       files: {
         "locales/en-US.json": JSON.stringify({

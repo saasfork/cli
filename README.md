@@ -1,84 +1,87 @@
 # SaasFork CLI
 
-SaasFork CLI is a command line tool to facilitate the development and management of your SaaS projects.
+SaasFork CLI est un outil en ligne de commande facilitant le développement et la gestion de vos projets SaaS.
 
-## Usage
+## Utilisation
 
-### With npx (recommended)
+### Avec npx (recommandé)
 
 ```bash
-npx @saasfork/cli [command] [options]
+npx @saasfork/cli [commande] [options]
 ```
 
-### Installation (optional)
+### Installation (optionnel)
 
-If you prefer to install the CLI globally:
+Si vous préférez installer le CLI globalement :
 
 ```bash
-# Global installation
+# Installation globale
 npm install -g @saasfork/cli
 
-# Or with yarn
+# Ou avec yarn
 yarn global add @saasfork/cli
 
-# Then use
-saasfork [command] [options]
+# Puis utilisez
+saasfork [commande] [options]
 ```
 
-## Available Commands
+## Commandes disponibles
 
-### Help Command
+### Commande d'aide
 
 ```bash
 npx @saasfork/cli --help
 ```
 
-### Creating a New Project
+### Création d'un nouveau projet
 
 ```bash
-npx @saasfork/cli <project-name>
+npx @saasfork/cli <nom-du-projet>
 ```
 
 #### Options
 
 | Option | Description |
 |--------|-------------|
-| `<project-name>` | Name of the project to create (required) |
+| `<nom-du-projet>` | Nom du projet à créer (requis) |
 
-### Other Commands
+### Fonctionnalités incluses
 
-More commands will be added as the tool develops.
+- Configuration Nuxt.js avec les bonnes pratiques
+- Installation de modules essentiels (TailwindCSS, i18n, etc.)
+- Configuration Docker pour le déploiement
+- Support multi-langue avec i18n
+- Structure de projet standardisée
 
-## Publishing Command
+## Développement
 
-To publish a new version of the CLI:
-
-```bash
-# Increment for a patch
-npm version patch
-
-# login
-npm login
-
-# Publish
-npm publish --access public
-```
-
-## Development
-
-To contribute to the CLI development:
+Pour contribuer au développement du CLI :
 
 ```bash
-# Clone the repository
-git clone [repo-url]
+# Cloner le dépôt
+git clone [url-du-depot]
 
-# Install dependencies
+# Installer les dépendances
 npm install
 
-# Link the package for development
+# Lier le package pour le développement
 npm link
 ```
 
-## License
+## Publication
+
+Pour publier une nouvelle version du CLI :
+
+```bash
+# Via le script npm
+npm run release
+
+# Ou manuellement
+npm version patch
+npm login
+npm publish --access public
+```
+
+## Licence
 
 ISC

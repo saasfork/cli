@@ -1,4 +1,6 @@
-# Étape de construction
+# ------------------------------------------
+# Étape 1: Construction de l'application
+# ------------------------------------------
 FROM node:22-alpine AS build
 WORKDIR /app
 
@@ -6,11 +8,10 @@ WORKDIR /app
 RUN corepack enable
 
 # Copier les fichiers de dépendances
-COPY package.json .
-COPY package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+COPY package.json package-lock.json* yarn.lock* pnpm-lock.yaml* ./
 
 # Installer les dépendances
-RUN npm i
+RUN npm ci
 
 # Copier le reste du projet
 COPY . .
@@ -18,7 +19,9 @@ COPY . .
 # Construction de l'application
 RUN npm run build
 
-# Étape de production
+# ------------------------------------------
+# Étape 2: Image de production
+# ------------------------------------------
 FROM node:22-alpine
 WORKDIR /app
 

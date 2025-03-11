@@ -6,11 +6,21 @@
   "bin": {
     "saasfork": "./cli.js"
   },
-  "scripts": {},
-  "keywords": [],
+  "scripts": {
+    "start": "node cli.js",
+    "test": "echo \"No tests yet\" && exit 0",
+    "prepublishOnly": "npm test",
+    "release": "npm version patch && npm publish --access public"
+  },
+  "keywords": [
+    "saas",
+    "cli",
+    "nuxt",
+    "scaffold"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A CLI tool to bootstrap SaaS projects with Nuxt",
   "dependencies": {
     "citty": "^0.1.6"
   }

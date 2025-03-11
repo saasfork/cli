@@ -1,75 +1,85 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
+import { handleError } from './error-handler.js';
 
+/**
+ * Ajoute le CSS global au fichier nuxt.config.ts
+ * @param {string} projectPath - Chemin du projet
+ * @param {string} cssPath - Chemin du fichier CSS à ajouter
+ * @returns {boolean} - Indique si l'ajout a réussi
+ */
 export function addCssToNuxtConfig(projectPath, cssPath) {
-  const nuxtConfigPath = path.join(projectPath, "nuxt.config.ts");
+  const nuxtConfigPath = path.join(projectPath, 'nuxt.config.ts');
+  
+  try {
+    if (!fs.existsSync(nuxtConfigPath)) {
+      throw new Error('`nuxt.config.ts` not found.');
+    }
 
-  if (!fs.existsSync(nuxtConfigPath)) {
-    console.error("❌ Error: `nuxt.config.ts` not found.");
+    let configContent = fs.readFileSync(nuxtConfigPath, 'utf8');
+    
+    // Vérifier si le fichier CSS est déjà dans la configuration
+    if (configContent.includes(cssPath)) {
+      console.log('✅ Global CSS is already configured in nuxt.config.ts');
+      return true;
+    }
+    
+    // Si une section CSS existe déjà
+    if (configContent.includes('css: [')) {
+      configContent = configContent.replace(
+        /css: \[/,
+        `css: [\n    '${cssPath}',`
+      );
+    } else {
+      // Sinon, ajouter une nouvelle section CSS
+      configContent = configContent.replace(
+        /export default defineNuxtConfig\(\s*\{/,
+        `export default defineNuxtConfig({\n  css: ['${cssPath}'],`
+      );
+    }
+    
+    fs.writeFileSync(nuxtConfigPath, configContent, 'utf8');
+    console.log('✅ Global CSS added to nuxt.config.ts');
+    return true;
+  } catch (error) {
+    handleError(error, 'adding CSS to Nuxt config');
     return false;
   }
-
-  let configContent = fs.readFileSync(nuxtConfigPath, "utf8");
-
-  // Check if the `css` property already exists
-  if (!configContent.includes("css: [")) {
-    // If `css` doesn't exist, add the property
-    configContent = configContent.replace(
-      "export default defineNuxtConfig({",
-      `export default defineNuxtConfig({
-  css: ["${cssPath}"],`
-    );
-  } else {
-    // If `css` exists, add the file to the list
-    const cssRegex = /css:\s*\[(.*?)\]/s;
-    configContent = configContent.replace(cssRegex, (match, group) => {
-      return `css: [${group ? group.trim() + ", " : ""}"${cssPath}"]`;
-    });
-  }
-
-  fs.writeFileSync(nuxtConfigPath, configContent, "utf8");
-  console.log(`✅ CSS file added to nuxt.config.ts: ${cssPath}`);
-  return true;
 }
 
 /**
  * Ajoute la configuration i18n au fichier nuxt.config.ts
- * @param {string} projectPath - Chemin vers le projet
- * @param {object} i18nConfig - Configuration i18n à ajouter
- * @returns {boolean} - Succès de l'opération
+ * @param {string} projectPath - Chemin du projet
+ * @param {string} i18nConfig - Configuration i18n sous forme de chaîne
+ * @returns {boolean} - Indique si l'ajout a réussi
  */
 export function addI18nToNuxtConfig(projectPath, i18nConfig) {
-  const nuxtConfigPath = path.join(projectPath, "nuxt.config.ts");
+  const nuxtConfigPath = path.join(projectPath, 'nuxt.config.ts');
+  
+  try {
+    if (!fs.existsSync(nuxtConfigPath)) {
+      throw new Error('`nuxt.config.ts` not found.');
+    }
 
-  if (!fs.existsSync(nuxtConfigPath)) {
-    console.error("❌ Error: `nuxt.config.ts` not found.");
+    let configContent = fs.readFileSync(nuxtConfigPath, 'utf8');
+    
+    // Vérifier si la configuration i18n existe déjà
+    if (configContent.includes('i18n:')) {
+      console.log('✅ i18n is already configured in nuxt.config.ts');
+      return true;
+    }
+    
+    // Ajouter la configuration i18n
+    configContent = configContent.replace(
+      /export default defineNuxtConfig\(\s*\{/,
+      `export default defineNuxtConfig({\n${i18nConfig},`
+    );
+    
+    fs.writeFileSync(nuxtConfigPath, configContent, 'utf8');
+    console.log('✅ i18n configuration added to nuxt.config.ts');
+    return true;
+  } catch (error) {
+    handleError(error, 'adding i18n to Nuxt config');
     return false;
   }
-
-  let configContent = fs.readFileSync(nuxtConfigPath, "utf8");
-
-  // Vérifier si la configuration i18n existe déjà
-  if (configContent.includes("i18n:")) {
-    console.log("✅ La configuration i18n existe déjà dans nuxt.config.ts");
-    return true;
-  }
-
-  // Formater la configuration i18n
-  const i18nConfigString = `
-  i18n: {
-    locales: ${JSON.stringify(i18nConfig.locales, null, 4)},
-    lazy: ${i18nConfig.lazy},
-    defaultLocale: '${i18nConfig.defaultLocale}',
-    langDir: '${i18nConfig.langDir}'
-  }`;
-
-  // Insérer la configuration après l'ouverture de l'objet defineNuxtConfig
-  configContent = configContent.replace(
-    /export default defineNuxtConfig\(\s*\{/,
-    `export default defineNuxtConfig({\n${i18nConfigString},`
-  );
-
-  fs.writeFileSync(nuxtConfigPath, configContent, "utf8");
-  console.log("✅ Configuration i18n ajoutée à nuxt.config.ts");
-  return true;
 }
